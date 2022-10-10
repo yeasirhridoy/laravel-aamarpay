@@ -2,10 +2,6 @@
 
 namespace Yahrdy\Aamarpay;
 
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
-use function Symfony\Component\Translation\t;
-
 class Aamarpay
 {
     private mixed $url;
@@ -65,6 +61,7 @@ class Aamarpay
         $url_forward = str_replace('"', '', stripslashes(curl_exec($ch)));
         curl_close($ch);
         $baseUrl = parse_url($this->url)['host'];
-        return 'https://' . $baseUrl . $url_forward;
+
+        return 'https://'.$baseUrl.$url_forward;
     }
 }
