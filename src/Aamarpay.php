@@ -67,5 +67,4 @@ class Aamarpay
         $baseUrl = parse_url($this->url)['host'];
         return 'https://' . $baseUrl . $url_forward;
     }
-
 }
