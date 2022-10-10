@@ -27,7 +27,6 @@ class Aamarpay
 
     public function checkout($amount, $orderId, $name, $address, $phone, $postCode = 1200, $value1 = null, $value2 = null, $value3 = null, $value4 = null)
     {
-
         $data = [
             'store_id' => $this->storeId,
             'signature_key' => $this->signatureKey,
@@ -50,5 +49,4 @@ class Aamarpay
 
         return Http::post($this->url, $data)->json();
     }
-
 }

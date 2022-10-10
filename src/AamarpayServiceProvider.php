@@ -4,7 +4,6 @@ namespace Yahrdy\Aamarpay;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Yahrdy\Aamarpay\Commands\AamarpayCommand;
 
 class AamarpayServiceProvider extends PackageServiceProvider
 {
