@@ -1,17 +1,17 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "yahrdy/aamarpay",
+    "description": "Laravel package for aamarpay payment gateway",
     "keywords": [
-        ":vendor_name",
+        "yahrdy",
         "laravel",
-        ":package_slug"
+        "aamarpay"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/yahrdy/aamarpay",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Yeasir Arafat",
+            "email": "yeasirarafat321@gmail.com",
             "role": "Developer"
         }
     ],
@@ -35,13 +35,13 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories"
+            "Yahrdy\\Aamarpay\\": "src",
+            "Yahrdy\\Aamarpay\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests"
+            "Yahrdy\\Aamarpay\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -60,10 +60,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Yahrdy\\Aamarpay\\AamarpayServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "Aamarpay": "Yahrdy\\Aamarpay\\Facades\\Aamarpay"
             }
         }
     },
