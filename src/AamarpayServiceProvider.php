@@ -17,7 +17,6 @@ class AamarpayServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('aamarpay')
-            ->hasConfigFile()
-            ->hasRoute('api');
+            ->hasConfigFile();
     }
 }
