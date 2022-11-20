@@ -2,6 +2,9 @@
 
 namespace Yahrdy\Aamarpay;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+
 class Aamarpay
 {
     private mixed $url;
@@ -26,13 +29,13 @@ class Aamarpay
         $this->signatureKey = config('aamarpay.signature_key');
     }
 
-    public function checkout($amount, $orderId, $name, $address, $phone, $postCode = 1200, $email = null, $value1 = null, $value2 = null, $value3 = null, $value4 = null)
+    public function checkout($amount, $name, $address, $phone, $value1 = null, $value2 = null, $value3 = null, $value4 = null)
     {
         $data = [
             'store_id' => $this->storeId,
             'signature_key' => $this->signatureKey,
             'tran_id' => uniqid(),
-            'success_url' => $this->url,
+            'success_url' => $this->successUrl,
             'fail_url' => $this->failUrl,
             'cancel_url' => $this->cancelUrl,
             'amount' => $amount,
@@ -63,5 +66,19 @@ class Aamarpay
         $baseUrl = parse_url($this->url)['host'];
 
         return 'https://'.$baseUrl.$url_forward;
+    }
+
+    public function verify(Request $request)
+    {
+        $url = config('aamarpay.verify_url');
+        $url = $url.'?'.http_build_query([
+            'request_id' => $request->mer_txnid,
+            'store_id' => $this->storeId,
+            'signature_key' => $this->signatureKey,
+            'type' => 'json',
+        ]);
+        $response = Http::get($url)->json();
+
+        return $response['pay_status'] == 'Successful';
     }
 }
