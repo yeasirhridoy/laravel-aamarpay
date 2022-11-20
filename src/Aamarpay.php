@@ -31,7 +31,7 @@ class Aamarpay
         $this->signatureKey = config('aamarpay.signature_key');
     }
 
-    public function checkout($amount, $orderId, $name, $address, $phone, $postCode = 1200, $email = null, $value1 = null, $value2 = null, $value3 = null, $value4 = null)
+    public function checkout($amount, $name, $address, $phone, $value1 = null, $value2 = null, $value3 = null, $value4 = null)
     {
         $data = [
             'store_id' => $this->storeId,

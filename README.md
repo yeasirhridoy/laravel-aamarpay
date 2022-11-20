@@ -1,19 +1,6 @@
 # Laravel package for aamarpay payment gateway
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/yahrdy/aamarpay.svg?style=flat-square)](https://packagist.org/packages/yahrdy/aamarpay)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/yahrdy/aamarpay/run-tests?label=tests)](https://github.com/yahrdy/aamarpay/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/yahrdy/aamarpay/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/yahrdy/aamarpay/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/yahrdy/aamarpay.svg?style=flat-square)](https://packagist.org/packages/yahrdy/aamarpay)
-
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
-
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/aamarpay.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/aamarpay)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+Laravel aamarpay is a laravel package for aamarpay payment gateway.
 
 ## Installation
 
@@ -21,13 +8,6 @@ You can install the package via composer:
 
 ```bash
 composer require yahrdy/aamarpay
-```
-
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="aamarpay-migrations"
-php artisan migrate
 ```
 
 You can publish the config file with:
@@ -40,39 +20,34 @@ This is the contents of the published config file:
 
 ```php
 return [
+    'url' => env('AAMARPAY_SERVER_URL', 'https://sandbox.aamarpay.com/request.php'),
+    'verify_url' => env('AAMARPAY_VERIFY_URL', 'https://sandbox.aamarpay.com/api/v1/trxcheck/request.php'),
+    'store_id' => env('AAMARPAY_STORE_ID', 'aamarpaytest'),
+    'signature_key' => env('AAMARPAY_SIGNATURE_KEY', 'dbb74894e82415a2f7ff0ec3a97e4183'),
+    'success_url' => env('AAMARPAY_SUCCESS_URL', 'http://localhost:8000/api/verify'),
+    'cancel_url' => env('AAMARPAY_CANCEL_URL', 'http://localhost:8000/api/verify'),
+    'fail_url' => env('AAMARPAY_FAIL_URL', 'http://localhost:8000/api/verify'),
 ];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="aamarpay-views"
 ```
 
 ## Usage
 
 ```php
-$aamarpay = new Yahrdy\Aamarpay();
-echo $aamarpay->echoPhrase('Hello, Yahrdy!');
-```
+// Use the facade to initiate a payment, it will return a redirect url
+public function checkout(){
+        return Aamarpay::checkout($amount, $name, $address, $phone, $value1 = null, $value2 = null, $value3 = null, $value4 = null);
+    }
 
-## Testing
-
-```bash
-composer test
+// To verify the payment, keep the redirect post parameter in the request
+// This will return a json response with the payment information
+public function verify(Request $request){
+        return Aamarpay::verify($request);
+    }
 ```
 
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
 
 ## Credits
 
