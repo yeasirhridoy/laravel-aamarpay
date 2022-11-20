@@ -2,6 +2,11 @@
 
 namespace Yahrdy\Aamarpay;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use function Symfony\Component\Translation\t;
+
 class Aamarpay
 {
     private mixed $url;
@@ -32,7 +37,7 @@ class Aamarpay
             'store_id' => $this->storeId,
             'signature_key' => $this->signatureKey,
             'tran_id' => uniqid(),
-            'success_url' => $this->url,
+            'success_url' => $this->successUrl,
             'fail_url' => $this->failUrl,
             'cancel_url' => $this->cancelUrl,
             'amount' => $amount,
@@ -61,7 +66,19 @@ class Aamarpay
         $url_forward = str_replace('"', '', stripslashes(curl_exec($ch)));
         curl_close($ch);
         $baseUrl = parse_url($this->url)['host'];
+        return 'https://' . $baseUrl . $url_forward;
+    }
 
-        return 'https://'.$baseUrl.$url_forward;
+    public function verify(Request $request)
+    {
+        $url = config('aamarpay.verify_url');
+        $url = $url . '?' . http_build_query([
+                'request_id' => $request->mer_txnid,
+                'store_id' => $this->storeId,
+                'signature_key' => $this->signatureKey,
+                'type' => 'json'
+            ]);
+        $response = Http::get($url)->json();
+        return $response['pay_status'] == 'Successful';
     }
 }
