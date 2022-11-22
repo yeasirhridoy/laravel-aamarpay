@@ -79,6 +79,6 @@ class Aamarpay
         ]);
         $response = Http::get($url)->json();
 
-        return $response['pay_status'] == 'Successful';
+        return $response['pay_status'] ?? null == 'Successful';
     }
 }
